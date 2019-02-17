@@ -23,11 +23,14 @@ function popInfo(i) {
     $('.hover_bkgr_fricc').show();
 }
 
+var map;
+var myCenter;
+var mapProp;
 
 function myMap() {
-    let myCenter = new google.maps.LatLng(calgaryPosition[0], calgaryPosition[1]);
+    myCenter = new google.maps.LatLng(calgaryPosition[0], calgaryPosition[1]);
 
-    let mapProp= {
+    mapProp= {
         panControl: true,
         zoomControl: true,
         mapTypeControl: true,
@@ -38,7 +41,7 @@ function myMap() {
         center: myCenter,
         zoom: initSize
     };
-    let map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
+    map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
     var infowindow = new google.maps.InfoWindow;
 
@@ -93,3 +96,68 @@ function myMap() {
     }
 
 };
+
+var _index=0;
+function addFunction() {
+    if(_index > 5) return;
+    createRow(locations[_index].id, locations[_index].position[0], locations[_index].position[1], locations[_index].status);
+    _index++;
+}
+
+
+function createRow(id, pos0, pos1, sts){
+    var table = document.getElementById("myTable");
+    var row = table.insertRow(1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var ceil5 = row.insertCell(4);
+
+
+    cell1.innerHTML = id;
+    cell2.innerHTML = pos0 + "," + pos1;
+    cell3.innerHTML = sts;
+    cell4.innerHTML = "2019-02-17";
+    ceil5.innerHTML = ' <button type="button" class="btn btn-success disabled" value="delete" >Resolve</button> <button type="button" class="btn btn-warning" value="delete" onclick="actionFunction(this)">Action</button> <button type="button" class="btn btn-danger" value="location" onclick="findLocation(this)">Location</button>'
+
+
+}
+
+function deleteFunction(r){
+    var j = r.parentNode.parentNode.rowIndex;
+    document.getElementById("myTable").deleteRow(j);
+
+    var idName = document.getElementById("myTable").rows[j].cells[0].innerText;
+
+    for(let i=0; i<locations.length; i++){
+        if(locations[i].id === idName){
+            locations[i].status = "solved";
+            break;
+        }
+    }
+}
+
+function findLocation(l){
+    var j = l.parentNode.parentNode.rowIndex;
+
+
+    var locations = {"id": "0001", "position": [51.081018, -114.122202], "status": "unsolved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU"};
+
+    return locations;
+}
+
+function actionFunction(m){
+    var j = m.parentNode.parentNode.rowIndex;
+    document.getElementById("myTable").rows[j].cells[4].innerHTML = '<button type="button" class="btn btn-success" value="delete" onclick="deleteFunction(this)">Resolve</button> <button type="button" class="btn btn-secondary disabled" value="delete">Action</button> <button type="button" class="btn btn-danger" value="location" onclick="findLocation(this)">Location</button>';
+    var idName = document.getElementById("myTable").rows[j].cells[0].innerText;
+
+    for(let i=0; i<locations.length; i++){
+        console.log(locations[i].id);
+        if(locations[i].id === idName){
+            locations[i].status = "in progress";
+            console.log("changed");
+            break;
+        }
+    }
+}

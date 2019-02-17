@@ -234,15 +234,11 @@
         <!-- Begin Page Content -->
         <div class="container-fluid">
 
-          <!-- Page Heading -->
-          <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Welcome! Officer Luna</h1>
-            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
-          </div>
 
     
         <div class="container-fluid">
         <div id="googleMap"></div>
+          <br>
         <div class="hover_bkgr_fricc">
             <span class="helper"></span>
             <div>
@@ -279,7 +275,7 @@
           <!-- DataTales Example -->
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Sorted by dates <button type="button" class="btn btn-warning" value="location" onclick="createRow('ben', 'calgary', '12', '2019/02/26')">Create</button></h6>
+              <h6 class="m-0 font-weight-bold text-primary">Sorted by dates <button type="button" class="btn btn-warning" value="location" onclick="addFunction()">Create</button></h6>
             </div>
             
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -289,19 +285,19 @@
                 <table id="myTable" class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                   <thead>
                     <tr>
-                      <th>Name</th>
+                      <th>ID</th>
                       <th>Location</th>
-                      <th>Age</th>
-                      <th>date</th>
+                      <th>Status</th>
+                      <th>Date</th>
                     </tr>
                   </thead>
                   <tfoot>
-                    <tr>
-                      <th>Name</th>
-                      <th>Location</th>
-                      <th>Age</th>
-                      <th>date</th>
-                    </tr>
+                  <tr>
+                    <th>ID</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                  </tr>
                   </tfoot>
                   <tbody>
                    
@@ -311,8 +307,9 @@
                       <td>27</td>
                         <td>2019/02/25</td>
                         <td>
-                            <button type="button" class="btn btn-success" value="delete" onclick="deleteFunction(this)">Resolve</button>
-                            <button type="button" class="btn btn-secondary" value="location" onclick="findLocation(this)">Location</button>
+                            <button type="button" class="btn btn-success disabled" value="delete" >Resolve</button>
+                          <button type="button" class="btn btn-warning" value="delete" onclick="actionFunction(this)">Action</button>
+                            <button type="button" class="btn btn-danger" value="location" onclick="findLocation(this)">Location</button>
                         </td>
                         
                     </tr>
@@ -324,10 +321,11 @@
                       <td>9737 Macleod Trail, Calgary, AB T2J 0P6</td>
                       <td>32</td>
                       <td>2011/02/21</td>
-                        <td>
-                            <button type="button" class="btn btn-success" value="delete" onclick="deleteFunction(this)">Resolve</button>
-                            <button type="button" class="btn btn-secondary" value="location" onclick="findLocation(this)">Location</button>
-                        </td>
+                      <td>
+                        <button type="button" class="btn btn-success disabled" value="delete" >Resolve</button>
+                        <button type="button" class="btn btn-warning" value="delete" onclick="actionFunction(this)">Action</button>
+                        <button type="button" class="btn btn-danger" value="location" onclick="findLocation(this)">Location</button>
+                      </td>
                     </tr>
                   </tbody>
                   <tbody>
@@ -337,10 +335,11 @@
                       <td>3625 Shaganappi Trail NW, Calgary, AB T3A 0E2</td>
                       <td>19</td>
                       <td>2019/01/20</td>
-                        <td>
-                            <button type="button" class="btn btn-success" value="delete" onclick="deleteFunction(this)">Resolve</button>
-                            <button type="button" class="btn btn-secondary" value="location" onclick="findLocation(this)">Location</button>
-                        </td>
+                      <td>
+                        <button type="button" class="btn btn-success disabled" value="delete" >Resolve</button>
+                        <button type="button" class="btn btn-warning" value="delete" onclick="actionFunction(this)">Action</button>
+                        <button type="button" class="btn btn-danger" value="location" onclick="findLocation(this)">Location</button>
+                      </td>
                     </tr>
                   </tbody>
                   <tbody>
@@ -350,10 +349,11 @@
                       <td>1324 Centre Street Northeast, Calgary, AB T2E 2R7</td>
                       <td>21</td>
                       <td>2019/01/20</td>
-                        <td>
-                            <button type="button" class="btn btn-success" value="delete" onclick="deleteFunction(this)">Resolve</button>
-                            <button type="button" class="btn btn-secondary" value="location" onclick="findLocation(this)">Location</button>
-                        </td>
+                      <td>
+                        <button type="button" class="btn btn-success disabled" value="delete" >Resolve</button>
+                        <button type="button" class="btn btn-warning" value="delete" onclick="actionFunction(this)">Action</button>
+                        <button type="button" class="btn btn-danger" value="location" onclick="findLocation(this)">Location</button>
+                      </td>
                     </tr>
                   </tbody>
                   <tbody>
@@ -363,10 +363,11 @@
                       <td>815 36 St NE, Calgary, AB T2A 4W3</td>
                       <td>40</td>
                       <td>2019/01/10</td>
-                        <td>
-                            <button type="button" class="btn btn-success" value="delete" onclick="deleteFunction(this)">Resolve</button>
-                            <button type="button" class="btn btn-secondary" value="location" onclick="findLocation(this)">Location</button>
-                        </td>
+                      <td>
+                        <button type="button" class="btn btn-success disabled" value="delete" >Resolve</button>
+                        <button type="button" class="btn btn-warning" value="delete" onclick="actionFunction(this)">Action</button>
+                        <button type="button" class="btn btn-danger" value="location" onclick="findLocation(this)">Location</button>
+                      </td>
                     </tr>
                   </tbody>
                 
@@ -382,13 +383,13 @@
          
 
           <!-- Content Row -->
-          <div class="row">
+          <div class="container-fluid">
 
 
             <div class="col-lg-6 mb-4">
 
               <!-- Illustrations -->
-              <div class="card shadow mb-4">
+              <div >
                 <div class="card-header py-3">
                   <h6 class="m-0 font-weight-bold text-primary">About us</h6>
                 </div>
@@ -400,16 +401,6 @@
                 </div>
               </div>
 
-              <!-- Approach -->
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Development Approach</h6>
-                </div>
-                <div class="card-body">
-                  <p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce CSS bloat and poor page performance. Custom CSS classes are used to create custom components and custom utility classes.</p>
-                  <p class="mb-0">Before working with this theme, you should become familiar with the Bootstrap framework, especially the utility classes.</p>
-                </div>
-              </div>
 
             </div>
           </div>
