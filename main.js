@@ -26,6 +26,74 @@ function popInfo(i) {
 var map;
 var myCenter;
 var mapProp;
+var markers = [];
+
+function setMarkers(i, map){
+    let urlstr = "http://maps.google.com/mapfiles/ms/icons/";
+    if(locations[i].status === "solved") {
+        urlstr += "green-dot.png";
+    }
+    else if(locations[i].status === "unsolved") urlstr += "red-dot.png";
+    else urlstr += "yellow-dot.png";
+
+    let marker = new google.maps.Marker({   // set the markers
+        position: new google.maps.LatLng(locations[i].position[0], locations[i].position[1]),
+        icon: {
+            url: urlstr
+        }
+    });
+
+    if(locations[i].status === "unsolved"){ // add the animation
+        marker.setAnimation(google.maps.Animation.BOUNCE);
+    }
+
+    google.maps.event.addListener(marker, 'click', function() {
+
+        map.setZoom(16);
+        map.setCenter(marker.getPosition());
+        popInfo(i);
+    });
+
+    marker.setMap(map);
+
+    markers.push(marker);
+}
+
+function clearMarkers(){
+    for (var i = 0; i < markers.length; i++) {
+        markers[i].setMap(null);
+    }
+    markers = [];
+}
+
+function updateMarkers(i, flag){
+    clearMarkers();
+    for(let j=0; j<locations.length; j++){
+        setMarkers(j, map);
+        console.log(j);
+    }
+}
+
+$(window).load(function () {
+    $('.hover_bkgr_fricc').click(function(){
+        map.panTo(myCenter);
+        map.setZoom(initSize);
+        $('#caseId').empty();
+        $('#caseLoc').empty();
+        $('#caseStatus').empty();
+        $('.videoClip').empty();
+        $('.hover_bkgr_fricc').hide();
+    });
+    $('.popupCloseButton').click(function(){
+        map.panTo(myCenter);
+        map.setZoom(initSize);
+        $('#caseId').empty();
+        $('#caseLoc').empty();
+        $('#caseStatus').empty();
+        $('.videoClip').empty();
+        $('.hover_bkgr_fricc').hide();
+    });
+});
 
 function myMap() {
     myCenter = new google.maps.LatLng(calgaryPosition[0], calgaryPosition[1]);
@@ -43,64 +111,13 @@ function myMap() {
     };
     map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
 
-    var infowindow = new google.maps.InfoWindow;
-
-    for(let i=0; i<locations.length; i++){
-        let urlstr = "http://maps.google.com/mapfiles/ms/icons/";
-        if(locations[i].status === "solved") {
-            urlstr += "green-dot.png";
-        }
-        else if(locations[i].status === "unsolved") urlstr += "red-dot.png";
-        else urlstr += "yellow-dot.png";
-
-        let marker = new google.maps.Marker({   // set the markers
-            position: new google.maps.LatLng(locations[i].position[0], locations[i].position[1]),
-            icon: {
-                url: urlstr
-            }
-        });
-
-        if(locations[i].status === "unsolved"){ // add the animation
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-
-        google.maps.event.addListener(marker, 'click', function() {
-
-            map.setZoom(16);
-            map.setCenter(marker.getPosition());
-            popInfo(i);
-        });
-
-        $(window).load(function () {
-            $('.hover_bkgr_fricc').click(function(){
-                map.panTo(myCenter);
-                map.setZoom(initSize);
-                $('#caseId').empty();
-                $('#caseLoc').empty();
-                $('#caseStatus').empty();
-                $('.videoClip').empty();
-                $('.hover_bkgr_fricc').hide();
-            });
-            $('.popupCloseButton').click(function(){
-                map.panTo(myCenter);
-                map.setZoom(initSize);
-                $('#caseId').empty();
-                $('#caseLoc').empty();
-                $('#caseStatus').empty();
-                $('.videoClip').empty();
-                $('.hover_bkgr_fricc').hide();
-            });
-        });
-
-        marker.setMap(map);
-    }
-
 };
 
 var _index=0;
 function addFunction() {
     if(_index > 5) return;
     createRow(locations[_index].id, locations[_index].position[0], locations[_index].position[1], locations[_index].status);
+    setMarkers(_index, map);
     _index++;
 }
 
@@ -133,9 +150,12 @@ function deleteFunction(r){
     for(let i=0; i<locations.length; i++){
         if(locations[i].id === idName){
             locations[i].status = "solved";
+            updateMarkers(i, false);
             break;
         }
     }
+
+
 }
 
 function findLocation(l){
@@ -153,10 +173,9 @@ function actionFunction(m){
     var idName = document.getElementById("myTable").rows[j].cells[0].innerText;
 
     for(let i=0; i<locations.length; i++){
-        console.log(locations[i].id);
         if(locations[i].id === idName){
             locations[i].status = "in progress";
-            console.log("changed");
+            updateMarkers(i, false);
             break;
         }
     }
