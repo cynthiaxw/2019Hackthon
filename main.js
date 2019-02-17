@@ -2,10 +2,10 @@
 var locations = [
     {"id": "0001", "position": [51.081018, -114.122202], "status": "unsolved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" },
     {"id": "0002", "position": [51.071493, -114.215829], "status": "unsolved", "video": "https://www.youtube.com/embed/wAEzpwvrveg" },
-    {"id": "0003", "position": [51.018190, -114.174806], "status": "solved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" },
-    {"id": "0004", "position": [51.078117, -114.039783], "status": "solved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" },
-    {"id": "0005", "position": [51.103241, -114.080574], "status": "in progress", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" },
-    {"id": "0006", "position": [51.076982, -113.991578], "status": "in progress", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" }
+    {"id": "0003", "position": [51.018190, -114.174806], "status": "unsolved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" },
+    {"id": "0004", "position": [51.078117, -114.039783], "status": "unsolved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" },
+    {"id": "0005", "position": [51.103241, -114.080574], "status": "unsolved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" },
+    {"id": "0006", "position": [51.076982, -113.991578], "status": "unsolved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU" }
 ];
 
 const calgaryPosition = [51.048615,-114.070847];
@@ -70,7 +70,6 @@ function updateMarkers(i, flag){
     clearMarkers();
     for(let j=0; j<locations.length; j++){
         setMarkers(j, map);
-        console.log(j);
     }
 }
 
@@ -143,13 +142,13 @@ function createRow(id, pos0, pos1, sts){
 
 function deleteFunction(r){
     var j = r.parentNode.parentNode.rowIndex;
-    document.getElementById("myTable").deleteRow(j);
-
     var idName = document.getElementById("myTable").rows[j].cells[0].innerText;
+    document.getElementById("myTable").deleteRow(j);
 
     for(let i=0; i<locations.length; i++){
         if(locations[i].id === idName){
             locations[i].status = "solved";
+            console.log(idName+"??????"+i);
             updateMarkers(i, false);
             break;
         }
