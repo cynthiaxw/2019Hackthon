@@ -120,6 +120,12 @@ function addFunction() {
     _index++;
 }
 
+function locateMark(i) {    // index of locations
+    map.setZoom(16);
+    map.setCenter(markers[i].getPosition());
+    popInfo(i);
+}
+
 
 function createRow(id, pos0, pos1, sts){
     var table = document.getElementById("myTable");
@@ -157,13 +163,16 @@ function deleteFunction(r){
 
 }
 
-function findLocation(l){
-    var j = l.parentNode.parentNode.rowIndex;
+function findLocation(m){
+    var j = m.parentNode.parentNode.rowIndex;
+    var idName = document.getElementById("myTable").rows[j].cells[0].innerText;
 
-
-    var locations = {"id": "0001", "position": [51.081018, -114.122202], "status": "unsolved", "video": "https://www.youtube.com/embed/aEzZLXBH3rU"};
-
-    return locations;
+    for(let i=0; i<locations.length; i++){
+        if(locations[i].id === idName){
+            locateMark(i);
+            break;
+        }
+    }
 }
 
 function actionFunction(m){
